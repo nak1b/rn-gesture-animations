@@ -8,7 +8,7 @@ const { PI } = Math;
 const { width } = Dimensions.get("window");
 const size = width - 32;
 const STROKE_WIDTH = 40;
-const r = size / 2;
+const r = PixelRatio.roundToNearestPixel(size / 2);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
