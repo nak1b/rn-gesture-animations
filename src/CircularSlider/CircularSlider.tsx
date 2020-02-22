@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimensions, StyleSheet, View } from "react-native";
+import { Dimensions, PixelRatio, StyleSheet, View } from "react-native";
 
 import { StyleGuide } from "../components";
 import CircularProgress from "./CircularProgress";
