@@ -2,11 +2,9 @@ import React from "react";
 import Animated from "react-native-reanimated";
 import Svg, { Path } from "react-native-svg";
 
-import { createSVGPath, curveTo, interpolatePath, moveTo } from "./SVGHelpers";
+import { createSVGPath, curveTo, moveTo, serialize } from "./SVGHelpers";
 
-interface MouthProps {
-  progress: Animated.Node<number>;
-}
+interface MouthProps {}
 
 const angryPath = createSVGPath();
 const AnimatedPath = Animated.createAnimatedComponent(Path);
@@ -48,11 +46,8 @@ curveTo(goodPath, {
   c2: { x: 97.4902012, y: 38.64845107 }
 });
 
-export default ({ progress }: MouthProps) => {
-  const d = interpolatePath(progress, {
-    inputRange: [0, 0.5, 1],
-    outputRange: [angryPath, normalPath, goodPath]
-  });
+export default () => {
+  const d = serialize(angryPath);
   return (
     <Svg width={120} height={40} viewBox="0 0 120 40">
       <AnimatedPath

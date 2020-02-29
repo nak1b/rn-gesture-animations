@@ -3,23 +3,12 @@ import { StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
 import Svg, { Path } from "react-native-svg";
 
-import { State } from "react-native-gesture-handler";
-import { withTransition } from "react-native-redash";
-import {
-  close,
-  createSVGPath,
-  curveTo,
-  interpolatePath,
-  moveTo
-} from "./SVGHelpers";
+import { close, createSVGPath, curveTo, moveTo, serialize } from "./SVGHelpers";
 
 interface EyeProps {
-  progress: Animated.Node<number>;
-  state: Animated.Node<State>;
   flip?: boolean;
 }
 
-const { cond, eq } = Animated;
 const angryPath = createSVGPath();
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 moveTo(angryPath, 16, 25);
@@ -108,16 +97,9 @@ curveTo(goodPath, {
 });
 close(goodPath);
 
-export default ({ progress, flip, state }: EyeProps) => {
-  const d = interpolatePath(progress, {
-    inputRange: [0, 0.5, 1],
-    outputRange: [angryPath, normalPath, goodPath]
-  });
+export default ({ flip }: EyeProps) => {
+  const d = serialize(angryPath);
   const rotateY = flip ? "180deg" : "0deg";
-  const x = cond(eq(state, State.ACTIVE), 5, 0);
-  const y = cond(eq(state, State.ACTIVE), 5, 0);
-  const translateX = withTransition(x);
-  const translateY = withTransition(y);
   return (
     <View style={{ transform: [{ rotateY }] }}>
       <Svg width={90} height={70} viewBox="0 0 98 78">
@@ -130,13 +112,12 @@ export default ({ progress, flip, state }: EyeProps) => {
           alignItems: "center"
         }}
       >
-        <Animated.View
+        <View
           style={{
             width: 10,
             height: 10,
             borderRadius: 5,
-            backgroundColor: "black",
-            transform: [{ translateX }, { translateY }]
+            backgroundColor: "black"
           }}
         />
       </View>

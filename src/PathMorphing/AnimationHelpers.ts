@@ -13,6 +13,7 @@ interface ColorInterpolation<T extends readonly number[]> {
 
 const { color, interpolate, round } = Animated;
 
+// eslint-disable-next-line import/prefer-default-export
 export const interpolateColor = <T extends readonly number[]>(
   value: Animated.Node<number>,
   { inputRange, outputRange }: ColorInterpolation<T>
